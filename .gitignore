@@ -1,0 +1,58 @@
+# Compiled object files
+*.o
+*.obj
+
+# Compiled dynamic libraries
+*.so
+*.dylib
+*.dll
+
+# Compiled static libraries
+*.a
+*.lib
+
+# Executables
+*.exe
+*.out
+*.app
+*.elf
+
+# Debug files
+*.dSYM/
+*.stackdump
+*.core
+*.pdb
+
+# Precompiled headers
+*.gch
+*.pch
+
+# Build directories
+build/
+bin/
+lib/
+
+# Logs and temporary files
+*.log
+*.tmp
+*.swp
+*.swo
+
+# IDE / Editor specific
+# VS Code
+.vscode/
+
+# CLion / JetBrains
+.idea/
+cmake-build-*/
+
+# Eclipse
+.project
+.cproject
+.settings/
+
+# MacOS
+.DS_Store
+
+# Windows
+Thumbs.db
