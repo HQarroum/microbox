@@ -33,10 +33,33 @@ The sandbox process is spawned using `clone3()` with specific namespace flags, t
 
 ### Building from source
 
+**Prerequisites:**
+- Linux system with GCC compiler
+- libseccomp development headers
+
+Install dependencies on Ubuntu/Debian:
+```bash
+sudo apt update
+sudo apt install build-essential libseccomp-dev
+```
+
+Install dependencies on RHEL/CentOS/Fedora:
+```bash
+sudo yum install gcc make libseccomp-devel  # RHEL/CentOS
+# or
+sudo dnf install gcc make libseccomp-devel  # Fedora
+```
+
+**Build:**
 ```bash
 git clone https://github.com/HQarroum/microbox.git
 cd microbox
-gcc -o microbox *.c -lpthread
+make
+```
+
+Alternative single-command build:
+```bash
+gcc -o microbox *.c -lm -lseccomp
 ```
 
 ### Basic Usage
@@ -109,7 +132,10 @@ Mount host directories into the sandbox:
 ## 🚧 Limitations
 
 - **Linux Only** - Requires Linux kernel with namespace support (kernel 3.8+)
-- **Bridge Networking Privileges** - Bridge networking requires CAP_NET_ADMIN or root privileges for network setup
+- **Privilege Requirements** - Some features require elevated privileges:
+  - **Bridge Networking** - Requires CAP_NET_ADMIN or root privileges for network setup
+  - **CGroups** - CPU and memory limits require CAP_SYS_ADMIN or root privileges
+  - **Mount Operations** - Custom rootfs and bind mounts may require additional privileges
 - **Seccomp Support** - System call filtering requires kernel seccomp support
 - **Architecture** - Currently designed for x86_64 Linux systems
 - **Container Runtime** - Not a full container runtime replacement, focused on process isolation
@@ -148,6 +174,54 @@ Create a development sandbox with selective host access:
 ```bash
 ./microbox --fs tmpfs --mount-ro /usr:/usr --mount-rw $PWD:/workspace --proc --dev -- /bin/bash
 ```
+
+## 🧪 Testing
+
+A basic test suite is provided to validate functionality:
+
+```bash
+# Run the test suite
+./test_microbox.sh
+
+# Build and run tests
+make && ./test_microbox.sh
+```
+
+**Note:** Some tests require elevated privileges to fully validate sandbox functionality. The test suite will skip privileged tests when run as a regular user.
+
+### Test Categories:
+- **Basic Tests**: Binary existence, help output, error handling
+- **Unprivileged Tests**: Argument parsing, basic execution attempts
+- **Privileged Tests**: Full sandbox functionality (requires root)
+
+## 🔧 Troubleshooting
+
+### Build Issues
+
+**Error: `seccomp.h: No such file or directory`**
+```bash
+# Install libseccomp development headers
+sudo apt install libseccomp-dev  # Ubuntu/Debian
+sudo yum install libseccomp-devel # RHEL/CentOS
+sudo dnf install libseccomp-devel # Fedora
+```
+
+### Runtime Issues
+
+**Error: `setup_cgroup_limits() failed: Permission denied`**
+- CGroup limits require elevated privileges (root or CAP_SYS_ADMIN)
+- Run with sudo for full functionality: `sudo ./microbox ...`
+- Or disable resource limits by not using `--cpus` or `--memory` flags
+
+**Error: `Failed to create network namespace`**
+- Network isolation requires CAP_NET_ADMIN or root privileges
+- Use `--net host` to use host networking without privileges
+- Or run with sudo for full network isolation
+
+**Error: `mount: Operation not permitted`**
+- Filesystem operations may require additional privileges
+- Use `--fs host` to avoid filesystem isolation
+- Or run with appropriate capabilities/privileges
 
 ## 👀 See Also
 

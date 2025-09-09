@@ -17,6 +17,9 @@
 *.app
 *.elf
 
+# Main binary (exclude from git)
+microbox
+
 # Debug files
 *.dSYM/
 *.stackdump
