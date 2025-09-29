@@ -1,0 +1,39 @@
+name: Push
+
+on:
+  push:
+    branches:
+      - master
+  pull_request:
+  workflow_dispatch:
+
+jobs:
+  lint-build-test:
+    runs-on: ubuntu-latest
+    steps:
+
+      # Checkout code.
+      - name: Checkout
+        uses: actions/checkout@v5
+
+      # Install libseccomp-dev for seccomp support.
+      - name: Install Dependencies
+        run: sudo apt-get update && sudo apt-get install -y libseccomp-dev
+
+      # Install Go.
+      - name: Set up Go
+        uses: actions/setup-go@v6
+        with:
+          go-version-file: go.mod
+          cache: true
+
+      # Cache Go modules.
+      - name: golangci-lint
+        uses: golangci/golangci-lint-action@v8
+        with:
+          version: latest
+          install-mode: goinstall
+
+      # Build the project.
+      - name: Build
+        run: go build -tags=seccomp -v ./...

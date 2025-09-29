@@ -1,0 +1,74 @@
+# Binaries for programs and plugins
+*.exe
+*.exe~
+*.dll
+*.so
+*.dylib
+*.test
+*.out
+microbox
+
+# Go build output
+*.o
+*.a
+*.wasm
+*.cgo1.go
+*.cgo2.c
+*.cgo3.go
+*.cgo4.c
+*.cgo5.go
+*.cgo6.c
+*.cgo7.go
+*.cgo8.c
+*.cgo9.go
+_cgo_export.*
+_cgo_gotypes.go
+_cgo_main.c
+_cgo_flags
+_cgo_*
+
+# Go workspace files
+*.log
+*.tmp
+
+# Output of `go build` and `go install`
+/bin/
+/build/
+/dist/
+/release/
+/microbox
+
+# Dependency directories (when vendored)
+vendor/
+
+# IDE / Editor files
+.idea/
+.vscode/
+*.swp
+*.swo
+*~
+.DS_Store
+
+# macOS system files
+.DS_Store
+.AppleDouble
+.LSOverride
+Icon?
+._*
+
+# Thumbnails
+*.jpg.lck
+*.png.lck
+
+# Go coverage & test
+*.coverprofile
+*.cov
+*.test
+
+# Other cache
+*.pyc
+__pycache__/
+
+# Go workspaces (Go 1.18+)
+go.work
+go.work.sum
