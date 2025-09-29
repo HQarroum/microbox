@@ -16,9 +16,9 @@ jobs:
           - goarch: amd64
             runner: ubuntu-24.04
             cc: gcc
-          # - goarch: arm64
-          #   runner: ubuntu-24.04-arm
-          #   cc: gcc
+          - goarch: arm64
+            runner: ubuntu-24.04-arm
+            cc: gcc
     runs-on: ${{ matrix.runner }}
     env:
       GOOS: linux
