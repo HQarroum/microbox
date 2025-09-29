@@ -32,6 +32,10 @@ You can run a simple rootfs image in an isolated sandbox in a couple minutes. Fi
 
 > Feel free to adapt the architecture and packages as needed in your image as needed.
 
+#### Install
+
+Download the latest release from the [Releases](https://github.com/HQarroum/microbox/releases) page.
+
 #### Create a sandbox
 
 Run `microbox` to create an isolated sandbox using the rootfs image you just created. This will run an isolated sandbox with no network access, using the new rootfs image.
