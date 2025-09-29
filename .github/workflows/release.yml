@@ -23,26 +23,32 @@ jobs:
     env:
       GOOS: linux
       GOARCH: ${{ matrix.goarch }}
-      CGO_ENABLED: "1"         # libseccomp needs CGO
-      CC: ${{ matrix.cc }}     # native compiler on each runner
+      CGO_ENABLED: "1"
+      CC: ${{ matrix.cc }}
     steps:
+
+      # Checkout the code.
       - uses: actions/checkout@v4
 
+      # Install libseccomp.
       - name: Install dependencies
         run: |
           sudo apt-get update
           sudo apt-get install -y libseccomp-dev pkg-config
 
+      # Set up Go.
       - uses: actions/setup-go@v5
         with:
           go-version-file: go.mod
           cache: true
 
+      # Build the binary.
       - name: Build
         run: |
           mkdir -p dist
           go build -tags=seccomp -trimpath -ldflags="-s -w" -o dist/microbox-linux-${GOARCH} .
 
+      # Upload the binary as an artifact.
       - name: Upload artifact
         uses: actions/upload-artifact@v4
         with:
@@ -53,9 +59,13 @@ jobs:
     needs: build
     runs-on: ubuntu-24.04
     steps:
+
+      # Download the build artifacts in the runner.
       - uses: actions/download-artifact@v5
         with:
           path: dist
+
+      # Create a GitHub Release with the binaries.
       - name: Create GitHub Release
         uses: softprops/action-gh-release@v2
         with:
