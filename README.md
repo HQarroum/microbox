@@ -1,3 +1,4 @@
+<br />
 <p align="center">
   <img width="280" src="assets/icon.png" alt="logo" />
   <br />
@@ -11,7 +12,7 @@
 
 ## 🔖 Features
 
-- **Sandbox Isolation** - Isolates networking, file-system, processes, and users from the host using Linux namespaces.
+- **Sandbox Isolation** - Networking, file-system, processes, and user isolation from the host using Linux namespaces.
 - **Filesystem Images** - Uses an [Overlay FS](https://docs.kernel.org/filesystems/overlayfs.html) to mount a custom root file-system from a user image. Also supports minimal `tmpfs` dedicated to bind-mounting.
 - **Networking** - Provides full network isolation by default. `bridge` and `host` modes available.
 - **Bind-mounts** - Selective read-only/read-write bind-mounting of host directories into the sandbox.
@@ -24,7 +25,7 @@ Microbox is a sandbox runtime that creates ephemeral and isolated execution envi
 
 Namespacing in `microbox` provide *process*, *network*, *filesystem*, *IPC*, and *user* isolation, while cgroups provide resource limitation management, and can run with different filesystem modes, from completely isolated overlay root filesystems, to controlled access to host directories.
 
-Microbox is built out of an educational purpose to understand how secure non VM based sandboxes can be on Linux. Its philosophy is to provide a maximum isolation by default, unlike other container runtimes such as [`runc`](https://github.com/opencontainers/runc), or [`Podman`](https://github.com/containers/podman) which make the choice of enforcing a good balance between security and usability of applications.
+Microbox is built out of an educational purpose to understand how secure non VM based sandboxes can be on Linux. Its philosophy is to provide maximum isolation by default, unlike other container runtimes such as [`runc`](https://github.com/opencontainers/runc), or [`Podman`](https://github.com/containers/podman) which enforce a good balance between security and usability of applications.
 
 ## 🚀 Quickstart
 
@@ -48,9 +49,9 @@ Run `microbox` to create an isolated sandbox using the rootfs image you just cre
 
 ### Filesystem
 
-The sandbox exposes a file-system that is ephemeral, isolated from the host—unless otherwise specified—and mounted in memory. As such, changes caused by applications within the sandbox's rootfs do not reflect on the host filesystem.
+The sandbox exposes a file-system that is ephemeral, isolated from the host—unless otherwise specified—and mounted in memory. As such, changes caused by applications within the sandbox's rootfs don't reflect on the host filesystem.
 
-Below is a comparison table of the different root file-system options supported.
+Below is a comparison table of the supported file-system options.
 
 Mode | Ephemeral | Isolated | Notes
 ---- | --------- | -------- | -----
